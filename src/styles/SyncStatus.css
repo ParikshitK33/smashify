@@ -1,0 +1,157 @@
+.sync-status {
+    background: #1e1e1e;
+    border-radius: 12px;
+    padding: 15px;
+    margin: 15px 0;
+    border: 1px solid #3a3a3a;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.sync-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.status-indicator {
+    font-size: 14px;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 20px;
+    background: #2a2a2a;
+}
+
+.status-indicator.online {
+    color: #4CAF50;
+}
+
+.status-indicator.offline {
+    color: #ff6b6b;
+}
+
+.queue-info {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: #2a2a2a;
+    padding: 5px 12px;
+    border-radius: 20px;
+}
+
+.queue-badge {
+    background: #FFD700;
+    color: #121212;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 700;
+    min-width: 24px;
+    text-align: center;
+}
+
+.queue-text {
+    font-size: 14px;
+    color: #e0e0e0;
+}
+
+.last-sync {
+    font-size: 12px;
+    color: #888;
+}
+
+.sync-btn {
+    background: transparent;
+    border: 2px solid #FFD700;
+    color: #FFD700;
+    padding: 8px 20px;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    min-width: 100px;
+}
+
+.sync-btn:hover:not(:disabled) {
+    background: #FFD700;
+    color: #121212;
+}
+
+.sync-btn.syncing {
+    opacity: 0.7;
+    cursor: not-allowed;
+    animation: pulse 1.5s infinite;
+}
+
+.sync-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    border-color: #666;
+    color: #666;
+}
+
+.sync-result {
+    font-size: 13px;
+    padding: 8px 15px;
+    border-radius: 8px;
+    margin-top: 10px;
+    animation: slideIn 0.3s ease;
+}
+
+.sync-result.success {
+    background: rgba(76, 175, 80, 0.2);
+    color: #4CAF50;
+    border: 1px solid #4CAF50;
+}
+
+.sync-result.error {
+    background: rgba(255, 107, 107, 0.2);
+    color: #ff6b6b;
+    border: 1px solid #ff6b6b;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0%,
+    100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+
+/* Mobile optimizations */
+
+@media (max-width: 480px) {
+    .sync-status {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .sync-info {
+        justify-content: center;
+    }
+    .sync-btn {
+        width: 100%;
+    }
+    .queue-info {
+        width: 100%;
+        justify-content: center;
+    }
+}

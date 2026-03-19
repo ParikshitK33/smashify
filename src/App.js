@@ -1,25 +1,77 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import SetupScreen from './components/SetupScreen';
+import ScoreScreen from './components/ScoreScreen';
+import HistoryScreen from './components/HistoryScreen';
+import { getMatches, saveMatch } from './utils/storage';
+import './styles/App.css';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+    const [currentMatch, setCurrentMatch] = useState(null);
+    const [matches, setMatches] = useState([]);
 
-export default App;
+    useEffect(() => {
+        setMatches(getMatches());
+    }, []);
+
+    const handleStartMatch = (matchData) => {
+        const newMatch = {
+            id: Date.now().toString(),
+            ...matchData,
+            currentSet: 1,
+            teamA: {
+                ...matchData.teamA,
+                sets: [0, 0, 0]
+            },
+            teamB: {
+                ...matchData.teamB,
+                sets: [0, 0, 0]
+            },
+            completed: false
+        };
+        setCurrentMatch(newMatch);
+    };
+
+    const handleMatchComplete = (finalMatch) => {
+        const updatedMatches = saveMatch(finalMatch);
+        setMatches(updatedMatches);
+        setCurrentMatch(null);
+    };
+
+    return ( <
+            Router >
+            <
+            div className = "app" >
+            <
+            Routes >
+            <
+            Route path = "/"
+            element = { < SetupScreen onStartMatch = { handleStartMatch }
+                />}  /
+                >
+                <
+                Route
+                path = "/score"
+                element = {
+                    currentMatch ? ( <
+                        ScoreScreen match = { currentMatch }
+                        onMatchComplete = { handleMatchComplete }
+                        />
+                    ) : ( <
+                        Navigate to = "/" / >
+                    )
+                }
+                /> <
+                Route
+                path = "/history"
+                element = { < HistoryScreen matches = { matches }
+                    />}  /
+                    >
+                    <
+                    /Routes> <
+                    /div> <
+                    /Router>
+                );
+            }
+
+            export default App;
